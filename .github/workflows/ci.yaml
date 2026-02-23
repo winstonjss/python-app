@@ -19,15 +19,9 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       -
         name: Build and push
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@v6      
+        run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
         with:
           push: true
-          tags: winstonjss15/python-app:${{ github.sha }}
-      - 
-        name: Set outputs
-        id: vars
-        run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
-      - 
-        name: Check outputs
-        run: echo ${{ steps.vars.outputs.sha_short }}
+          tags: winstonjss15/python-app:${{ GITHUB_OUTPUT }}      
 
