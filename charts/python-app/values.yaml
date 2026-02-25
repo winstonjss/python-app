@@ -3,39 +3,27 @@ replicaCount: 1
 image:
   repository: winstonjss15/python-app
   pullPolicy: IfNotPresent
-  # Overrides the image tag whose default is the chart appVersion.
   tag: v2
 
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
-
-podAnnotations: {}
-podLabels: {}
-
-
 serviceAccount:
   create: false
   automount: true
   annotations: {}
   name: ""
+podAnnotations: {}
 
+podLabels: {}
 
 podSecurityContext: {}
   # fsGroup: 2000
 
 securityContext: {}
-  # capabilities:
-  #   drop:
-  #   - ALL
-  # readOnlyRootFilesystem: true
-  # runAsNonRoot: true
-  # runAsUser: 1000
-
 service:
   type: ClusterIP
   port: 5000
-
 
 ingress:
   enabled: true
@@ -49,15 +37,11 @@ ingress:
         - path: /
           pathType: Prefix
   tls: []
-  #  - secretName: chart-example-tls
-  #    hosts:
-  #      - chart-example.local
 
 resources:
   requests:
     cpu: 50m
     memory: 50M
-
 livenessProbe:
   httpGet:
     path: /api/v1/healthz
@@ -72,20 +56,9 @@ autoscaling:
   minReplicas: 1
   maxReplicas: 100
   targetCPUUtilizationPercentage: 80
-  # targetMemoryUtilizationPercentage: 80
-
-# Additional volumes on the output Deployment definition.
 volumes: []
-# - name: foo
-#   secret:
-#     secretName: mysecret
-#     optional: false
 
-# Additional volumeMounts on the output Deployment definition.
 volumeMounts: []
-# - name: foo
-#   mountPath: "/etc/foo"
-#   readOnly: true
 
 nodeSelector: {}
 
