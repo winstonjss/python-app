@@ -52,11 +52,11 @@ httpRoute:
 resources: {}
 livenessProbe:
   httpGet:
-    path: /
+    path: /api/v1/healthz
     port: http
 readinessProbe:
   httpGet:
-    path: /
+    path: /api/v1/healthz
     port: http
 
 autoscaling:
