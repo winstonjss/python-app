@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
       - name: python-app
-        image: winstonjss15/python-app:v2
+        image: winstonjss15/python-app:v4
         ports:
         - containerPort: 5000

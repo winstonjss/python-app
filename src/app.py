@@ -1,11 +1,25 @@
-import time
+from flask import Flask, jsonify
+import datetime
+import socket
 
-# Función que imprime "Hola Mundo" cada 5 segundos
-def print_hello_world():
-    while True:
-        print("Hola Mundo")
-        time.sleep(5)  # Pausa de 5 segundos
 
-# Llamada a la función
-if __name__ == "__main__":
-    print_hello_world()
+app = Flask(__name__)
+
+
+@app.route('/api/v1/details')
+
+def details():
+    return jsonify({
+    	'time': datetime.datetime.now().strftime("%I:%M:%S%p  on %B %d, %Y"),
+    	'hostname': socket.gethostname()
+    })
+
+@app.route('/api/v1/healthz')
+
+def health():
+	# Do an actual check here
+    return jsonify({'status': 'up'}), 200
+
+if __name__ == '__main__':
+
+    app.run(host="0.0.0.0")

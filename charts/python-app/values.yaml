@@ -4,7 +4,7 @@ image:
   repository: winstonjss15/python-app
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: v3
+  tag: v4
 
 imagePullSecrets: []
 nameOverride: ""
@@ -58,14 +58,14 @@ resources:
     cpu: 50m
     memory: 50M
 
-#livenessProbe:
-#  httpGet:
-#    path: /api/v1/healthz
-#    port: http
-#readinessProbe:
-#  httpGet:
-#    path: /api/v1/healthz
-#    port: http
+livenessProbe:
+  httpGet:
+    path: /api/v1/healthz
+    port: http
+readinessProbe:
+  httpGet:
+    path: /api/v1/healthz
+    port: http
 
 autoscaling:
   enabled: false
