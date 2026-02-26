@@ -4,7 +4,7 @@ image:
   repository: winstonjss15/python-app
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: v2
+  tag: v3
 
 imagePullSecrets: []
 nameOverride: ""
