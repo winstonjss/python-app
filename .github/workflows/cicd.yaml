@@ -40,5 +40,5 @@ jobs:
         run: |
           argocd login argocd.test.com \
           --insecure --grcp-Web \
-          --username ${secrets.ARGO_CD_USER} --password ${secrets.ARGO_CD_PASSWORD}
+          --username ${{secrets.ARGO_CD_USER}} --password ${{secrets.ARGO_CD_PASSWORD}}
           argocd app sync python-app
