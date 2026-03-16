@@ -1,4 +1,4 @@
-name: ci
+name: cicd
 
 on:
   push:
@@ -8,8 +8,8 @@ on:
       - master
 
 jobs:
-  docker:
-    runs-on: self-hosted
+  ci:
+    runs-on: ubuntu-latest
     steps:
       -
         name: Declare some variables
@@ -28,3 +28,17 @@ jobs:
         with:
           push: true
           tags: winstonjss15/python-app:${{ env.COMMIT_ID }}
+  cd:
+    needs: ci
+    runs-on: self-hosted
+
+    steps:
+    
+      -
+        name: Argo cd sync
+        shell: bash
+        run: |
+          argocd login argocd.test.com \
+          --insecure --grcp-Web \
+          --username ${secrets.ARGO_CD_USER} --password ${secrets.ARGO_CD_PASSWORD}
+          argocd app sync python-app
