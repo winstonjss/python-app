@@ -8,7 +8,7 @@ on:
       - master
 
 jobs:
-  ci:
+  ci:    
     runs-on: ubuntu-latest
     steps:
       -
@@ -28,11 +28,32 @@ jobs:
         with:
           push: true
           tags: winstonjss15/python-app:${{ env.COMMIT_ID }}
+    outputs:
+      commit_id: ${{ env.COMMIT_ID }}
   cd:
     needs: ci
     runs-on: self-hosted
 
-    steps:
+    steps:    
+      - uses: actions/checkout@v3
+      
+      - 
+        name: Install pip and yq
+        shell: bash
+        run: |
+          sudo apt-get update && sudo apt-get install -y python3-pip                  
+      -
+        name: Modify values file
+        shell: bash
+        run: |
+          echo: ${{ needs.commit_id }}
+          python3 -m pip install yq --break-system-packages
+          yq -Yi '.image.tag = "${{ needs.commit_id }}"' charts/python-app/values.yaml
+      - 
+        name: Commit changes
+        uses: EndBug/add-and-commit@v9
+        with:
+          message: 'Updates values.ymal with commit ${{ needs.commit_id }}'
       -
         name: Install argocd
         shell: bash
