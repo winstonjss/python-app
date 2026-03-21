@@ -54,7 +54,7 @@ jobs:
         shell: bash
         run: |
           echo ${{ needs.commit_id }}
-          pip install yq
+          python3 -m pip install yq --break-system-packages
           yq -Yi '.image.tag = "${{ needs.commit_id }}"' charts/python-app/values.yaml
       - 
         name: Commit changes
