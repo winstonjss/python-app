@@ -37,24 +37,17 @@ jobs:
     steps:    
       - uses: actions/checkout@v3
 
-      #- 
-      #  name: Install pip
-      #  shell: bash
-      #  run: |
-      #    sudo apt-get update && sudo apt-get install -y python3-pip                  
-      #-
-      #  name: Modify values file
-      #  shell: bash
-      #  run: |
-      #    echo ${{ needs.commit_id }}
-      #    python3 -m pip install yq --break-system-packages
-      #    yq -Yi '.image.tag = "${{ needs.commit_id }}"' charts/python-app/values.yaml
+      - 
+        name: Install pip
+        shell: bash
+        run: |
+          sudo apt-get update && sudo apt-get install -y python3-pip                  
       -
         name: Modify values file
         shell: bash
         run: |
           echo ${{ needs.commit_id }}
-          python -m pip install yq --break-system-packages
+          python3 -m pip install yq --break-system-packages
           yq -Yi '.image.tag = "${{ needs.commit_id }}"' charts/python-app/values.yaml
       - 
         name: Commit changes
