@@ -1,5 +1,5 @@
 replicaCount: 1
-
+#
 image:
   repository: winstonjss15/python-app
   pullPolicy: IfNotPresent
