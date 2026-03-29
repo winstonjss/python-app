@@ -51,13 +51,14 @@ jobs:
         name: Modify values file
         shell: bash
         run: |
-          echo "Update tag: ${{ needs.ci.outputs.commit_id }}"
+          echo "Update a tag: ${{ needs.ci.outputs.commit_id }}"
           python3 -m pip install yq --break-system-packages
-          yq -Yi '.image.tag = "${{needs.ci.outputs.commit_id}}"' charts/python-app/values.yaml      - 
+          yq -Yi '.image.tag = "${{ needs.ci.outputs.commit_id }}"' charts/python-app/values.yaml
+      - 
         name: Commit changes
         uses: EndBug/add-and-commit@v9
         with:
-          message: 'Updates values.ymal with commit ${{ needs.ci.outputs.commit_id }}'
+          message: 'Updates values.ymal with commit ${{ needs.commit_id }}'
       -
         name: Install argocd
         shell: bash
