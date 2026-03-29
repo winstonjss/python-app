@@ -17,8 +17,7 @@ jobs:
       - 
         name: Set Short SHA
         id: vars
-        run: echo "COMMIT_ID=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
-
+        run: echo "COMMIT_ID=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT 
       - 
         name: Check output
         run: echo ${{ steps.vars.outputs.COMMIT_ID }} 
@@ -33,9 +32,9 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           push: true
-          tags: winstonjss15/python-app:${{ env.COMMIT_ID }}
+          tags: winstonjss15/python-app:${{ steps.vars.outputs.COMMIT_ID }}
     outputs:
-      commit_id: ${{ env.COMMIT_ID }}
+      commit_id: ${{ steps.vars.outputs.COMMIT_ID }}
   cd:
     needs: ci
     runs-on: self-hosted
@@ -52,9 +51,9 @@ jobs:
         name: Modify values file
         shell: bash
         run: |
-          echo ${{ needs.commit_id }}
+          echo "Update tag: ${{ needs.ci.outputs.commit_id }}"
           python3 -m pip install yq --break-system-packages
-          yq -Yi '.image.tag = "${{ needs.commit_id }}"' charts/python-app/values.yaml
+          yq -Yi '.image.tag = "$${{ needs.ci.outputs.commit_id }}"' charts/python-app/values.yaml
       - 
         name: Commit changes
         uses: EndBug/add-and-commit@v9
