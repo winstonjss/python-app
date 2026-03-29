@@ -17,7 +17,7 @@ jobs:
       - 
         name: Set Short SHA
         id: vars
-        run: echo "COMMIT_ID=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+        run: echo "COMMIT_ID=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
 
       - 
         name: Check output
