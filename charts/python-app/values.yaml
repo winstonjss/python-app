@@ -2,7 +2,7 @@ replicaCount: 1
 image:
   repository: winstonjss15/python-app
   pullPolicy: IfNotPresent
-  tag: 'v4'
+  tag: '345a6eb'
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
